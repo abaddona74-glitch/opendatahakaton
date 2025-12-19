@@ -16,19 +16,20 @@ export default function MapView() {
 
   return (
     <div className="h-[600px] w-full">
-      <MapContainer center={[41.3, 69.2]} zoom={11} style={{ height: '100%', width: '100%' }}>
+      <MapContainer {...({ center: [41.3, 69.2], zoom: 11, style: { height: '100%', width: '100%' } } as any)}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {regions.map((reg) => (
           <GeoJSON
-            key={reg.id}
-            data={reg.polygon}
-            style={() => ({ color: `hsl(${(reg.id * 60) % 360},60%,40%)`, weight: 2, fillOpacity: 0.3 })}
-            eventHandlers={{
-              click: () => {
-                // on click show popup via API fetch in real app
-                alert(`${reg.name} (${reg.code})`);
+            {...({
+              key: reg.id,
+              data: reg.polygon,
+              style: () => ({ color: `hsl(${(reg.id * 60) % 360},60%,40%)`, weight: 2, fillOpacity: 0.3 }),
+              eventHandlers: {
+                click: () => {
+                  alert(`${reg.name} (${reg.code})`);
+                }
               }
-            }}
+            } as any)}
           />
         ))}
       </MapContainer>

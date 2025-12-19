@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
-const MapView = dynamic(() => import('../../components/MapView'), { ssr: false });
+const MapView = dynamic(() => import('../components/MapView'), { ssr: false });
 
 interface User {
   id: number;
@@ -152,7 +152,7 @@ export default function Home() {
                 <h2 className="text-2xl font-semibold mb-4 text-black dark:text-white">Map</h2>
                 <MapView />
               </div>
-            </p>
+            </div>
           ) : (
             <div className="space-y-3">
               {users.map((user) => (
