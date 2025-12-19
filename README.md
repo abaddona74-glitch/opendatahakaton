@@ -154,8 +154,6 @@ Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Learn More
 
-- [Next.js Documentation](https://nextjs.org/docs) - Learn about Next.js features and API
-- [Vercel Postgres Documentation](https://vercel.com/docs/storage/vercel-postgres) - Database documentation
 - [Next.js GitHub repository](https://github.com/vercel/next.js)
 
 
