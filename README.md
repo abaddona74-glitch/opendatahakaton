@@ -158,6 +158,4 @@ Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 - [Vercel Postgres Documentation](https://vercel.com/docs/storage/vercel-postgres) - Database documentation
 - [Next.js GitHub repository](https://github.com/vercel/next.js)
 
-## License
 
-This project is open source and available under the MIT License.
