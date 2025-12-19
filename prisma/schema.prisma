@@ -8,6 +8,68 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum UtilityType {
+  ELECTRIC
+  GAS
+  WATER
+}
+
+model Region {
+  id        Int               @id @default(autoincrement())
+  name      String
+  code      String            @unique
+  polygon   Json
+  districts District[]
+  accounts  UtilityAccount[]
+}
+
+model District {
+  id        Int      @id @default(autoincrement())
+  name      String
+  regionId  Int
+  region    Region   @relation(fields: [regionId], references: [id])
+  streets   Street[]
+}
+
+model Street {
+  id         Int     @id @default(autoincrement())
+  name       String
+  districtId Int
+  district   District @relation(fields: [districtId], references: [id])
+  houses     House[]
+}
+
+model House {
+  id        Int      @id @default(autoincrement())
+  number    String
+  streetId  Int
+  street    Street   @relation(fields: [streetId], references: [id])
+  residents Resident[]
+  // optional geo location for Leaflet markers
+  location  Json?
+}
+
+model Resident {
+  id         Int              @id @default(autoincrement())
+  firstName  String
+  lastName   String
+  middleName String?
+  houseId    Int
+  house      House            @relation(fields: [houseId], references: [id])
+  accounts   UtilityAccount[]
+}
+
+model UtilityAccount {
+  id         Int         @id @default(autoincrement())
+  accountNo  String      @unique
+  type       UtilityType
+  balance    Float       @default(0)
+  residentId Int
+  regionId   Int
+  resident   Resident    @relation(fields: [residentId], references: [id])
+  region     Region      @relation(fields: [regionId], references: [id])
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   name      String
@@ -16,3 +78,4 @@ model User {
 
   @@map("users")
 }
+

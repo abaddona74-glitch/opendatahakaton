@@ -8,15 +8,9 @@ import { initDatabase } from '@/lib/db';
 export async function GET() {
   try {
     await initDatabase();
-    return NextResponse.json(
-      { message: 'Database initialized successfully' },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: 'Database initialized successfully' }, { status: 200 });
   } catch (error) {
     console.error('Database initialization error:', error);
-    return NextResponse.json(
-      { error: 'Failed to initialize database' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to initialize database' }, { status: 500 });
   }
 }

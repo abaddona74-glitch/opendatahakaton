@@ -1,7 +1,10 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
+
+const MapView = dynamic(() => import('../components/MapView'), { ssr: false });
 
 interface User {
   id: number;
@@ -144,11 +147,12 @@ export default function Home() {
                 </a>{' '}
                 to initialize the database.
               </p>
+
+              <div className="mt-8">
+                <h2 className="text-2xl font-semibold mb-4 text-black dark:text-white">Map</h2>
+                <MapView />
+              </div>
             </div>
-          ) : users.length === 0 ? (
-            <p className="text-zinc-600 dark:text-zinc-400">
-              No users yet. Add one using the form above!
-            </p>
           ) : (
             <div className="space-y-3">
               {users.map((user) => (
@@ -167,25 +171,7 @@ export default function Home() {
           )}
         </div>
 
-        <div className="mt-8 text-center">
-          <a
-            href="https://nextjs.org/docs"
-            className="text-blue-600 dark:text-blue-400 hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Next.js Documentation
-          </a>
-          {' | '}
-          <a
-            href="https://vercel.com/docs/storage/vercel-postgres"
-            className="text-blue-600 dark:text-blue-400 hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vercel Postgres Documentation
-          </a>
-        </div>
+        
       </main>
     </div>
   );
