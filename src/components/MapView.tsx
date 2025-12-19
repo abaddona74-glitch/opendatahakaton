@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import L from "leaflet";
 import {
   MapContainer,
@@ -9,7 +8,6 @@ import {
   GeoJSON,
   Marker,
   Popup,
-  useMapEvents,
 } from "react-leaflet";
 
 // load CSS only on client
@@ -18,7 +16,15 @@ export default function MapView() {
   const [houses, setHouses] = useState<any[]>([]);
 
   useEffect(() => {
-    import("leaflet/dist/leaflet.css");
+    // Load Leaflet CSS via CDN (reliable in Codespaces + avoids TS module issues)
+    const existing = document.querySelector('link[data-leaflet="true"]');
+    if (!existing) {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+      link.setAttribute("data-leaflet", "true");
+      document.head.appendChild(link);
+    }
 
     // fix default marker icons when bundler doesn't copy images
     L.Icon.Default.mergeOptions({

@@ -141,17 +141,12 @@ export default function Home() {
             <div className="text-red-600 dark:text-red-400">
               <p className="font-medium">Error: {error}</p>
               <p className="text-sm mt-2">
-                Make sure your database is configured. Visit{' '}
+                Make sure your database is configured. Visit
                 <a href="/api/init" className="underline">
                   /api/init
-                </a>{' '}
+                </a>
                 to initialize the database.
               </p>
-
-              <div className="mt-8">
-                <h2 className="text-2xl font-semibold mb-4 text-black dark:text-white">Map</h2>
-                <MapView />
-              </div>
             </div>
           ) : (
             <div className="space-y-3">
@@ -171,7 +166,21 @@ export default function Home() {
           )}
         </div>
 
-        
+        <div className="mt-8 bg-white dark:bg-zinc-900 rounded-lg shadow-lg p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-semibold text-black dark:text-white">Map</h2>
+            <a href="/map" className="text-blue-600 dark:text-blue-400 hover:underline">
+              Open full map →
+            </a>
+          </div>
+          <MapView />
+          {error ? (
+            <p className="text-sm mt-3 text-red-600 dark:text-red-400">
+              Users API error: {error}
+            </p>
+          ) : null}
+        </div>
+
       </main>
     </div>
   );
