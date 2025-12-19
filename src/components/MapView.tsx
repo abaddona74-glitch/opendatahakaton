@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import L from "leaflet";
 import {
   MapContainer,
@@ -10,10 +10,18 @@ import {
   Popup,
 } from "react-leaflet";
 
+type MapViewProps = {
+  className?: string;
+};
+
 // load CSS only on client
-export default function MapView() {
+export default function MapView({ className }: MapViewProps) {
   const [regions, setRegions] = useState<any[]>([]);
   const [houses, setHouses] = useState<any[]>([]);
+
+  const containerClass = useMemo(() => {
+    return className ?? "h-[600px] w-full";
+  }, [className]);
 
   useEffect(() => {
     // Load Leaflet CSS via CDN (reliable in Codespaces + avoids TS module issues)
@@ -49,9 +57,13 @@ export default function MapView() {
   }, []);
 
   return (
-    <div className="h-[600px] w-full">
+    <div className={containerClass}>
       <MapContainer
-        {...({ center: [41.3, 69.2], zoom: 11, style: { height: "100%", width: "100%" } } as any)}
+        {...({
+          center: [41.3, 69.2],
+          zoom: 11,
+          style: { height: "100%", width: "100%" },
+        } as any)}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
