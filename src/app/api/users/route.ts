@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getUsers, createUser } from '@/lib/db';
+import { getUsers, createUser } from '@/lib/prisma';
 
 /**
  * GET /api/users

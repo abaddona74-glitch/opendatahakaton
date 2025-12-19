@@ -1,4 +1,18 @@
-import { sql } from '@vercel/postgres';
+import { createClient as createVercelClient, sql as vercelSql } from '@vercel/postgres';
+
+// Prefer a direct (non-pooling) connection string when available in development
+// to avoid DNS/resolution issues with pooler endpoints in some environments.
+let sql = vercelSql;
+if (process.env.POSTGRES_URL_NON_POOLING) {
+  try {
+    const client = createVercelClient({ connectionString: process.env.POSTGRES_URL_NON_POOLING });
+    sql = client.sql.bind(client) as typeof vercelSql;
+  } catch (e) {
+    // If creating a direct client fails, fall back to the default proxy `vercelSql`.
+    // The error will surface when queries run.
+    console.warn('Failed to create direct Postgres client, falling back to pooled client.', e);
+  }
+}
 
 /**
  * Database utility functions for Vercel Postgres
